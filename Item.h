@@ -1,3 +1,4 @@
+//Item Header file, function prototypes and variable declaration
 #ifndef ITEM_H
 #define ITEM_H
 #include <iostream>

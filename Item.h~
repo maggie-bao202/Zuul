@@ -7,8 +7,8 @@ using namespace std;
 class Item {
  public://functions
   Item(char* itemName);  
-  char* getName();
-  ~Item();
+  char* getItemName();
+  virtual ~Item();
  private://variables
   char* itemName;
 };
