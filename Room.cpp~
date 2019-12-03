@@ -10,7 +10,7 @@ Room :: Room(char* newName) {
 }
 
 char* Room :: getCurrent(){
-  return currentRoom;
+  return roomName;
 }
 
 int Room :: inventorySize(){
@@ -36,7 +36,7 @@ void Room :: addItem(Item* item) {
 void Room :: deleteItem(Item* item){
   vector<Item*>::iterator it; //create iterator
   for(it = itemList->begin(); it != itemList->end(); it++){
-    if (strcmp((*it)->getName(), item->getName()) == 0){
+    if (strcmp((*it)->getItemName(), item->getItemName()) == 0){
       delete *it;
       itemList->erase(it);
       cout << endl;

@@ -31,7 +31,6 @@ void Room :: nextTo(Room* nextRoom, char* direction){
 
 void Room :: addItem(Item* item) {
   itemList->push_back(item);
-  return;
 }
 
 void Room :: deleteItem(Item* item){

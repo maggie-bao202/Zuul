@@ -13,5 +13,5 @@ char* Item :: getItemName() {
 }
 
 Item :: ~Item(){
-  delete []itemName();
+  delete[] itemName;
 }
