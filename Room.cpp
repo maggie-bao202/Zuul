@@ -8,6 +8,7 @@
 Room :: Room(char* newName) {//contructor
   roomName = newName;
   itemList = new vector<Item*>;
+  nextRooms = new map<char*, Room*>;
 }
 
 char* Room :: getRoomName(){//get the name of the room
@@ -38,7 +39,6 @@ void Room :: deleteItem(Item* item){//delete items
   vector<Item*>::iterator it; //create iterator
   for(it = itemList->begin(); it != itemList->end(); it++){
     if (strcmp((*it)->getItemName(), item->getItemName()) == 0){
-      delete *it;
       itemList->erase(it);
       cout << endl;
       return;

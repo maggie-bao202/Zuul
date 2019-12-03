@@ -17,7 +17,7 @@ void getItem(vector<Item*>* inventory, Room* current);
 int main(){
   cout << "MAKE A SANDWICH" << endl; //title
   cout << "The most exciting game ever developed." << endl; //description
-
+  cout << "Your task is to go to the supermarket, buy your choice of bread, cheese, meat, and lettuce, then come back to the kitchen to make the perfect sandwich" << endl;
   vector<Room*>* roomList = new vector<Room*>();
   vector<Item*>* inventory = new vector<Item*>();//vector pointer of items inside inventory
 
@@ -206,7 +206,6 @@ void dropItem(vector<Item*>* inventory, Room* current){//drop item into a room f
   vector<Item*>* roomItems = current -> getItemList();
   vector<Item*> :: iterator it;
   char* dropItem = new char();
-  cout << inventory->size()<<endl;
   if(inventory->size() == 0){
     cout << "Inventory is empty." << endl;
   }
@@ -219,7 +218,6 @@ void dropItem(vector<Item*>* inventory, Room* current){//drop item into a room f
 	cout << endl;
 	current->addItem(*it);
 	inventory->erase(it);
-	cout << "hi" << endl;
 	return;
       }
       else {
@@ -232,7 +230,6 @@ void dropItem(vector<Item*>* inventory, Room* current){//drop item into a room f
 void getItem(vector<Item*>* inventory, Room* current){//pick up item from room
   vector<Item*> :: iterator it;
   char* getItem = new char();
-  //cout <<current->itemListSize()<<endl;
   if(current->itemListSize() == 0){
     cout << "No Items in Room." << endl;
   }
@@ -244,7 +241,6 @@ void getItem(vector<Item*>* inventory, Room* current){//pick up item from room
     for(it = current->getItemList()->begin(); it != current->getItemList()->end(); it++){//search through itemList
       if (strcmp((*it)->getItemName(), getItem) == 0){//if there is a match, add to inventory delete from room
         inventory->push_back(*it);
-	cout << "hello" << endl;
         current->deleteItem(*it);
 	return;
       }

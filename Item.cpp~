@@ -1,17 +1,17 @@
+//Item.cpp file, functions accessable within Item class are here
 #include <iostream>
 #include "Item.h"
 
 using namespace std;
 
-//contructor
-Item :: Item(char* newName) {
+Item :: Item(char* newName) {//constructor
   this->itemName = newName;
 }
-//returns item's name, getter
-char* Item :: getItemName() {
+
+char* Item :: getItemName() {//return item name
   return itemName;
 }
 
-Item :: ~Item(){
+Item :: ~Item(){//destructor
   delete[] itemName;
 }

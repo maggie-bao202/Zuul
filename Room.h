@@ -20,5 +20,5 @@ public://all functions are public
 private://variables are kept private
   char* roomName;
   vector<Item*>* itemList;
-  map<char*, Room*>* nextRooms = new map<char*, Room*>;
+  map<char*, Room*>* nextRooms;
 };
