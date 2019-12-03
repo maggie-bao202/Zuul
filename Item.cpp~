@@ -5,13 +5,9 @@ using namespace std;
 
 //contructor
 Item :: Item(char* newName) {
-  this->itemName = newName;
+  itemName = newName;
 }
 //returns item's name, getter
-char* Item :: getItemName() {
+char* Item :: getName() {
   return itemName;
-}
-
-Item :: ~Item(){
-  delete []itemName();
 }

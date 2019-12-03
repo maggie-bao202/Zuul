@@ -2,6 +2,7 @@
 #include <cstring>
 #include <vector>
 #include <map>
+#include <cstring>
 #include "Room.h"
 #include "Item.h"
 
@@ -9,11 +10,13 @@ using namespace std;
 
 void printRoom(vector<Item*>* inventory, Room* current);
 void printInventory(vector<Item*>* inventory);
-void dropItem(vector<Item*>* &inventory, Room* &current);
-void getItem(vector<Item*>* &inventory, Room* &current);
+void dropItem(vector<Item*>* inventory);
+void getItem(vector<Item*>* inventory);
 
 int main(){
-
+  vector<Room*>* RoomList = new vector<Room*>(); //create a vector pointer of media pointers
+  vector<Item*>* ItemList = new vector<Item*>();
+  
   Item* phone = new Item ("Phone");
   Item* keys = new Item ("Keys");
   Item* CDs = new Item ("Heavy Metal CDs");
@@ -99,7 +102,6 @@ int main(){
   cout << "The most exciting game ever developed." << endl;
 
   Room* current = bedRoom;
-  vector<Room*>* roomList = new vector<Room*>();
   vector<Item*>* inventory = new vector<Item*>();
   
   char keyword[40];
@@ -150,8 +152,8 @@ void printRoom(vector<Item*>* inventory, Room* current){
   }
   else{
     cout << "ITEMS: " << endl;
-    for(it = itemList->begin(); it != itemList->end(); it++){
-      cout << "<" << current->getItemList(*it)->getItemName() << ">" << endl;
+    for(it = inventory->begin(); it != inventory->end(); it++){//through each element of vector
+      cout << "<" << current->getItemList(*it)->getItemName << ">" << endl;
     }
     cout << endl;
   }
@@ -169,23 +171,20 @@ void printInventory(vector<Item*>* inventory){
   cout << endl;
 }
 
-void dropItem(vector<Item*>* inventory, Room* &current){
-  Item* item;
-  vector<Item*> roomItems = current -> getItemList();
+void dropItem(vector<Item*>* inventory, Room* current){
   vector<Item*> :: iterator it;
   char dropItem = new char(40);
   
   if(inventory->size() == 0){
     cout << "You have nothing in your inventory." << endl;
   }
-  
   else{
     cout << "Enter Item Name to be Dropped: " << endl;
-    cin.getline(dropItem, 40, '\n');
-    for(it = inventory->begin(); it != inventory->end(); it++){
-      if (strcmp((*it)->getItemName(), dropItem) == 0){
+    cin.getLine(dropItem, 40, '\n');
+    for(it = inventory->begin(); it != inventory->end(); it++){//through each element of vector
+      if (strcmp((*it)->getItemName(), dropItem) == 0){//if the title matches up with any media title
 	cout << endl;
-	current->(*it)->addItem();
+	current->addItem(inventory->*it);
 	inventory->erase(inventory->begin() + (*it));
 	break;
       }
@@ -196,7 +195,7 @@ void dropItem(vector<Item*>* inventory, Room* &current){
   cout << endl;
 }
 
-  void getItem(vector<Item*>* inventory){
+void getItem(){
   vector<Item*> :: iterator it;
   char getItem = new char(40);
 
@@ -205,11 +204,11 @@ void dropItem(vector<Item*>* inventory, Room* &current){
   }
   else{
     cout << "Enter Item Name to be Picked: " << endl;;
-    cin.getline(getItem, 40, '\n');
+    cin.getLine(getItem, 40, '\n');
     for(it = inventory->begin(); it != inventory->end(); it++){//through each element of vector
       if (strcmp((*it)->getItemName(), getItem) == 0){//if the title matches up with any media title
         cout << endl;
-        inventory->push_back(inventory->(*it));
+        inventory->push_back(inventory->*it);
         inventory->erase(inventory->begin() + (*it));
 	break;
       }

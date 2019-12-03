@@ -10,7 +10,7 @@ Room :: Room(char* newName) {
 }
 
 char* Room :: getCurrent(){
-  return roomName;
+  return currentRoom;
 }
 
 int Room :: inventorySize(){

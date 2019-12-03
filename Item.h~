@@ -1,0 +1,15 @@
+#ifndef ITEM_H
+#define ITEM_H
+#include <iostream>
+
+using namespace std;
+
+class Item {
+ public://functions
+  Item(char* itemName);  
+  char* getName();
+  ~Item();
+ private://variables
+  char* itemName;
+};
+#endif
