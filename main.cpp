@@ -48,7 +48,7 @@ int main(){
   Room* car = new Room ("in your Lamborghini Veneno. You use your money to hide behind your frequent thoughts of sadness. Hopefully that sandwich will cheer you up. :)");
   Room* drive = new Room ("You are driving in your car. The radio plays of late 80s metal rock.");
   drive->addItem(CDs);
-  Room* parkLot = new Room ("You are standing in in the parking lot. You see the towering letters of Fred Meyer's in the distance."):
+  Room* parkLot = new Room ("You are standing in in the parking lot. You see the towering letters of Fred Meyer's in the distance.");
   Room* entrance = new Room ("You are at the entrance of Fred Meyer's");
   Room* mainAsle = new Room ("You are standing in the main asle of Fred Meyer's.");
   Room* grains = new Room ("standing in the grain section of Fred Meyer's. So many breads to choose from.");
@@ -88,7 +88,7 @@ int main(){
   mainAsle->nextTo(dairy, "DAIRY");
   mainAsle->nextTo(poultry, "POULTRY");
   mainAsle->nextTo(produce, "PRODUCE");
-  mainAsle->nextTo(kitchen, "Kitchen"),//testing winning condition
+  mainAsle->nextTo(kitchen, "Kitchen");//testing winning condition
 
 
   grains->nextTo(mainAsle, "Main Asle");
