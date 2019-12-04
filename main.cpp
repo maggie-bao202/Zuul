@@ -17,9 +17,10 @@ bool find(char* item, vector<Item*>* inventory);
 
 
 int main(){
-  cout << "MAKE A SANDWICH" << endl; //title
+  cout << "~ MAKE A SANDWICH ~" << endl; //title
   cout << "The most exciting game ever developed." << endl; //description
-  cout << "Your task is to go to the supermarket, buy your choice of bread, cheese, meat, and lettuce, then come back to the kitchen to make the perfect sandwich." << endl;
+  cout << "- - -" << endl;
+  cout << "TASK: Go to the supermarket, buy your choice of bread, cheese, meat, and lettuce, then come back to the kitchen to make the perfect sandwich." << endl;
   vector<Item*>* inventory = new vector<Item*>();//vector pointer of items inside inventory
 
   //create Items
@@ -43,7 +44,8 @@ int main(){
   Room* livingRoom = new Room ("You are in your living room.");
   livingRoom->addItem(phone);//add Items to Rooms
   livingRoom->addItem(keys);
-  Room* kitchen = new Room ("You are in your kitchen. The sun is shining through the windows. It's a beautiful day for a sandwich.");
+  Room* kitchen = new Room ("You are in your kitchen. The sun is shining through the windows. It's a beautiful day for a sandwich; however, you still need some more ingredients to complete the sandwich. You\
+ do not want to eat a disappointment.");
   Room* hallway = new Room ("You are in the hallway. It's kinda spooky, not gonna lie.");
   Room* garage = new Room ("You are in your garage. There is a Lamborghini Veneno there because you are one rich chad. But you are lonely so you don't have a butler to make your own sandwich.");
   Room* car = new Room ("You are sitting in your Lamborghini Veneno. You use your money to hide behind your frequent thoughts of sadness. Hopefully that sandwich will cheer you up. :)");
@@ -51,7 +53,7 @@ int main(){
   drive->addItem(CDs);
   Room* parkLot = new Room ("You are standing in in the parking lot. You see the towering letters of Fred Meyer's in the distance.");
   Room* entrance = new Room ("You are at the entrance of Fred Meyer's.");
-  Room* mainAsle = new Room ("You are standing in the main asle of Fred Meyer's.");
+  Room* mainAisle = new Room ("You are standing in the main asle of Fred Meyer's.");
   Room* grains = new Room ("You are standing in the grain section of Fred Meyer's. So many breads to choose from.");
   grains->addItem(wBread);
   grains->addItem(sdBread);
@@ -89,7 +91,7 @@ int main(){
   drive->nextTo(car, "Back to House");
   
   parkLot->nextTo(entrance, "Fred Meyer's Entrance");
-  parkLot->nextTo(drive, "Get In Car");
+  parkLot->nextTo(drive, "Get in Car");
   
   entrance->nextTo(mainAisle, "Main Aisle");
   entrance->nextTo(parkLot, "Parking Lot");
@@ -133,6 +135,9 @@ int main(){
         delete inventory;
 	return 0;
       }
+      else{
+	printRoom(inventory, current);
+      }
     }
     else{
       printRoom(inventory, current); //print a description of the room
@@ -163,19 +168,20 @@ int main(){
       printInventory(inventory);//printInventory method
       cout << endl;
     }
-    else if (strcmp(keyword, "GET") == 0){
+    else if (strcmp(keyword, "ADD") == 0){
       cout << endl;
       getItem(inventory, current);//getItem method
-      cout << endl;
+      cout << "Item Added." << endl;
     }
     else if (strcmp(keyword, "DROP") == 0){
       cout << endl;
-      dropItem(inventory, current);//droptItem method
+      dropItem(inventory, current);//dropItem method
+      cout << "Item Dropped." << endl;
     }
     else if (strcmp(keyword, "QUIT") == 0){//QUIT, must delete memory too
       cout << "Game Stopped." << endl;
       for (auto it = inventory->begin(); it != inventory->end(); it++){
-	delete (*it);
+	  delete (*it);
       }
       delete inventory;
       return 0;
@@ -189,12 +195,7 @@ int main(){
 void printRoom(vector<Item*>* inventory, Room* current){//prints the description, items, and exits of a room
  vector<Item*> :: iterator it;
  cout << "- - -" << endl;
- cout <<current->getRoomName();//get description
- if(current == kitchen){
-   cout << " You still need some more ingredients to complete the sandwich. You do not want to eat\
- a disappointment." << endl;
- }
- cout << endl;
+ cout <<current->getRoomName()<<endl;//get description
  cout <<  endl;
  cout << "ITEMS:" << endl;
  if(current->itemListSize() == 0){//if no items
