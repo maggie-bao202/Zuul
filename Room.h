@@ -16,7 +16,7 @@ public://all functions are public
   void nextTo(Room* newRoom, char* direction);
   void addItem(Item* item);
   void deleteItem(Item* item);
-
+  virtual ~Room();
 private://variables are kept private
   char* roomName;
   vector<Item*>* itemList;

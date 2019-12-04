@@ -13,12 +13,13 @@ void printRoom(vector<Item*>* inventory, Room* current);
 void printInventory(vector<Item*>* inventory);
 void dropItem(vector<Item*>* inventory, Room* current);
 void getItem(vector<Item*>* inventory, Room* current);
+bool find(char* item, vector<Item*>* inventory);
+
 
 int main(){
   cout << "MAKE A SANDWICH" << endl; //title
   cout << "The most exciting game ever developed." << endl; //description
-
-  vector<Room*>* roomList = new vector<Room*>();
+  cout << "Your task is to go to the supermarket, buy your choice of bread, cheese, meat, and lettuce, then come back to the kitchen to make the perfect sandwich." << endl;
   vector<Item*>* inventory = new vector<Item*>();//vector pointer of items inside inventory
 
   //create Items
@@ -28,9 +29,9 @@ int main(){
   Item* wBread = new Item ("White Bread");
   Item* sdBread = new Item ("Sourdough Bread");
   Item* wwBread = new Item ("Whole Wheat Bread");
-  Item* mCheese = new Item ("Mozarella Cheese");
+  Item* mCheese = new Item ("Mozzarella Cheese");
   Item* cCheese = new Item ("Cheddar Cheese");
-  Item* pCheese = new Item ("Parmesean Cheese");
+  Item* pCheese = new Item ("Parmesan Cheese");
   Item* ssHam = new Item ("Sliced Smoked Ham");
   Item* ssBeef = new Item ("Sliced Smoked Beef");
   Item* lettuce = new Item ("Lettuce");
@@ -42,16 +43,16 @@ int main(){
   Room* livingRoom = new Room ("You are in your living room.");
   livingRoom->addItem(phone);//add Items to Rooms
   livingRoom->addItem(keys);
-  Room* kitchen = new Room ("in your kitchen. The sun is shining through the windows. It's a beautiful day for a sandwich.");
+  Room* kitchen = new Room ("You are in your kitchen. The sun is shining through the windows. It's a beautiful day for a sandwich.");
   Room* hallway = new Room ("You are in the hallway. It's kinda spooky, not gonna lie.");
-  Room* garage = new Room ("You are in your garage. There is a Lamborghini Veneno there because you are one rich boi. But you are lonely so you don't have a bultler to make your own sandwich.");
-  Room* car = new Room ("in your Lamborghini Veneno. You use your money to hide behind your frequent thoughts of sadness. Hopefully that sandwich will cheer you up. :)");
-  Room* drive = new Room ("You are driving in your car. The radio plays of late 80s metal rock.");
+  Room* garage = new Room ("You are in your garage. There is a Lamborghini Veneno there because you are one rich chad. But you are lonely so you don't have a butler to make your own sandwich.");
+  Room* car = new Room ("You are sitting in your Lamborghini Veneno. You use your money to hide behind your frequent thoughts of sadness. Hopefully that sandwich will cheer you up. :)");
+  Room* drive = new Room ("You are driving in your car. The radio plays of late 80s metal rock. You see Fred Meyer's in the distance.");
   drive->addItem(CDs);
-  Room* parkLot = new Room ("You are standing in in the parking lot. You see the towering letters of Fred Meyer's in the distance."):
-  Room* entrance = new Room ("You are at the entrance of Fred Meyer's");
+  Room* parkLot = new Room ("You are standing in in the parking lot. You see the towering letters of Fred Meyer's in the distance.");
+  Room* entrance = new Room ("You are at the entrance of Fred Meyer's.");
   Room* mainAsle = new Room ("You are standing in the main asle of Fred Meyer's.");
-  Room* grains = new Room ("standing in the grain section of Fred Meyer's. So many breads to choose from.");
+  Room* grains = new Room ("You are standing in the grain section of Fred Meyer's. So many breads to choose from.");
   grains->addItem(wBread);
   grains->addItem(sdBread);
   grains->addItem(wwBread);
@@ -62,7 +63,7 @@ int main(){
   Room* poultry = new Room ("You are standing in the poultry section of Fred Meyer's. Any kind of sandwich meat is fine.");
   poultry->addItem(ssHam);
   poultry->addItem(ssBeef);
-  Room* produce = new Room ("You are standing in the produce section of Fred Meyer's. You need either Lettuce or Spinach.");
+  Room* produce = new Room ("You are standing in the produce section of Fred Meyer's. You need either lettuce or spinach...or both!");
   produce->addItem(lettuce);
   produce->addItem(spinach);
 
@@ -78,31 +79,42 @@ int main(){
   hallway->nextTo(livingRoom, "Living Room");
   hallway->nextTo(garage, "Garage");
 
-  garage->nextTo(car, "Car");
-  car->nextTo(drive, "DRIVE");
+  garage->nextTo(car, "Lamborghini");
+  garage->nextTo(hallway, "Hallway");
+
+  car->nextTo(drive, "Start Driving");
+  car->nextTo(garage, "Back in Garage");
+
   drive->nextTo(parkLot, "Parking Lot");
-  parkLot->nextTo(entrance, "Fred Meyer's");
-  entrance->nextTo(mainAsle, "Main Asle");
+  drive->nextTo(car, "Back to House");
+  
+  parkLot->nextTo(entrance, "Fred Meyer's Entrance");
+  parkLot->nextTo(drive, "Get In Car");
+  
+  entrance->nextTo(mainAisle, "Main Aisle");
+  entrance->nextTo(parkLot, "Parking Lot");
+  
+  mainAisle->nextTo(grains, "GRAINS");
+  mainAisle->nextTo(dairy, "DAIRY");
+  mainAisle->nextTo(poultry, "POULTRY");
+  mainAisle->nextTo(produce, "PRODUCE");
+  mainAisle->nextTo(entrance, "Entrance of Freddie's");
+  
+  mainAisle->nextTo(kitchen, "Kitchen");//testing winning condition
+  kitchen->nextTo(mainAisle, "Fred");
 
-  mainAsle->nextTo(grains, "GRAINS");
-  mainAsle->nextTo(dairy, "DAIRY");
-  mainAsle->nextTo(poultry, "POULTRY");
-  mainAsle->nextTo(produce, "PRODUCE");
-  mainAsle->nextTo(kitchen, "Kitchen");//testing winning condition
-
-
-  grains->nextTo(mainAsle, "Main Asle");
+  grains->nextTo(mainAisle, "Main Aisle");
   grains->nextTo(dairy, "DAIRY");
 
-  dairy->nextTo(mainAsle, "Main Asle");
+  dairy->nextTo(mainAisle, "Main Aisle");
   dairy->nextTo(poultry, "POULTRY");
   dairy->nextTo(grains, "GRAINS");
 
-  poultry->nextTo(mainAsle, "Main Asle");
+  poultry->nextTo(mainAisle, "Main Aisle");
   poultry->nextTo(produce, "PRODUCE");
   poultry->nextTo(dairy, "DAIRY");
 
-  produce->nextTo(mainAsle, "Main Asle");
+  produce->nextTo(mainAisle, "Main Aisle");
   produce->nextTo(poultry, "POULTRY");
 
   Room* current = bedRoom; //start in bedroom
@@ -110,9 +122,22 @@ int main(){
   char input[40];
   while (true){
     if (current == kitchen){//winning condition
-      return 0;
+      if((find("White Bread",inventory) || find("Whole Wheat Bread", inventory) || find("Sourdough Bread", inventory)) &&
+	 (find("Mozarella Cheese", inventory) || find("Cheddar Cheese", inventory) || find("Parmesean Cheese", inventory)) &&
+	 (find("Sliced Smoked Ham", inventory) || find("Sliced Smoked Beef", inventory)) &&
+	 find("Lettuce", inventory) || find("Spinach", inventory)){
+	cout << "You assemble the carefully selected ingredients you so laboriously sought out to buy. The bread, vegetables, sliced meat, and cheese fall so effortlessly together as if they were meant to be together like this all along. You take a slow bite. Tears of deliciousness fill your twinkling eyes as you take another bite, then another, until the last bite is finally finished. It all went by so quickly. But you have more ingredients leftover on the counter. With lightning speed you make more sandwiches and gobble them down showing no signs of stopping. You feel an earthy rumble from somewhere deep within. It is your colon, telling you that it is ready to be released. You make a beeline for the bathroom, and blow up that toilet that was waiting for the moment to arrive all along." << endl << endl << "THE END" << endl;
+	for (auto it = inventory->begin(); it != inventory->end(); it++){//prevent memory leak
+        delete (*it);
+      }
+      delete inventory;
+	return 0;
+      }
+      else{
+	cout << "You still need some more ingredients to complete the sandwich. You do not want to eat a disappointment." << endl;
+      }
     }
-
+    
     printRoom(inventory, current); //print a description of the room
 
     cin.get(keyword, 40);
@@ -120,7 +145,7 @@ int main(){
     cin.ignore(999, '\n');
     if (strcmp(keyword, "GO") == 0){//if the keyword is GO
       bool found = false;
-      cout << "Go to: " << endl;
+      cout << "Go Where? " << endl;
       cin.get(input, 40);
       cin.clear();
       cin.ignore(999, '\n');
@@ -152,11 +177,15 @@ int main(){
       cout << endl;
     }
     else if (strcmp(keyword, "QUIT") == 0){//QUIT, must delete memory too
-      cout << "GAME OVER." << endl;
+      cout << "Game Stopped." << endl;
+      for (auto it = inventory->begin(); it != inventory->end(); it++){
+	delete (*it);
+      }
+      delete inventory;
       return 0;
     }
     else{
-      cout << "Enter a valid keyword (GO, INVENTORY, GET, DROP, QUIT)." << endl;
+      cout << "Enter a valid keyword (\"GO\", \"INVENTORY\", \"GET\", \"DROP\", or \"QUIT\"). All words are case sensitive." << endl;
     }
   }
 }
@@ -173,7 +202,7 @@ void printRoom(vector<Item*>* inventory, Room* current){//prints the description
   else{
     vector<Item*>* itemList = current -> getItemList();//print items
     for(it = itemList->begin(); it != itemList->end(); it++){
-      cout << "<" << (*it)->getItemName() << ">" << endl;
+      cout << "<" << (*it)->getItemName() << "> ";
     }
     cout << endl;
   }
@@ -182,8 +211,9 @@ void printRoom(vector<Item*>* inventory, Room* current){//prints the description
  map<char*, Room*>* nextRooms = current->getNext();//show exits
  map<char*, Room*> :: iterator itr = nextRooms->begin();
  for (itr = nextRooms->begin(); itr != nextRooms->end(); itr++) {//print adjacent rooms
-   cout << "<" << itr->first << ">" << endl;
+   cout << "<" << itr->first << "> ";
  }
+ cout << endl;
  cout << "- - - " << endl;
 }
 
@@ -192,11 +222,11 @@ void printInventory(vector<Item*>* inventory){//print out whatever is in vector 
   vector<Item*>::iterator it;
   cout << "INVENTORY:" << endl;
   if (inventory->size() == 0){
-    cout << "EMPTY" << endl;
+    cout << "No Items." << endl;
   }
   else{
     for (it = inventory -> begin(); it != inventory -> end(); ++it) {
-      cout << "<" << (*it)->getItemName() << ">" << endl;
+      cout << "<" << (*it)->getItemName() << "> ";
     }
   }
 }
@@ -205,26 +235,26 @@ void dropItem(vector<Item*>* inventory, Room* current){//drop item into a room f
   Item* item;
   vector<Item*>* roomItems = current -> getItemList();
   vector<Item*> :: iterator it;
+  bool found = false;
   char* dropItem = new char();
-  cout << inventory->size()<<endl;
   if(inventory->size() == 0){
-    cout << "Inventory is empty." << endl;
+    cout << "No Items in Inventory." << endl;
   }
   
   else{
-    cout << "Enter Item Name to be Dropped: " << endl;
+    printInventory(inventory);
+    cout << "Drop What?" << endl;
     cin.getline(dropItem, 40, '\n');
     for(it = inventory->begin(); it != inventory->end(); it++){
       if (strcmp((*it)->getItemName(), dropItem) == 0){//if matches, add to room and remove inventory
-	cout << endl;
 	current->addItem(*it);
 	inventory->erase(it);
-	cout << "hi" << endl;
+	found = true;
 	return;
       }
-      else {
-	cout << "Invalid Item." << endl;
-      }
+    }
+    if (found == false){
+      cout << "Invalid Item Name." << endl;
     }
   }
 }
@@ -232,26 +262,35 @@ void dropItem(vector<Item*>* inventory, Room* current){//drop item into a room f
 void getItem(vector<Item*>* inventory, Room* current){//pick up item from room
   vector<Item*> :: iterator it;
   char* getItem = new char();
-  //cout <<current->itemListSize()<<endl;
+  bool found = false;
   if(current->itemListSize() == 0){
     cout << "No Items in Room." << endl;
   }
   else{
-    cout << "Enter Item Name to be Picked: " << endl;
+    cout << "Get What?" << endl;
     cin.get(getItem, 40);//take input getItem
     cin.clear();
     cin.ignore(999, '\n');
     for(it = current->getItemList()->begin(); it != current->getItemList()->end(); it++){//search through itemList
       if (strcmp((*it)->getItemName(), getItem) == 0){//if there is a match, add to inventory delete from room
         inventory->push_back(*it);
-	cout << "hello" << endl;
         current->deleteItem(*it);
+	found = true;
 	return;
       }
-      else {
-        cout << "Invalid Item." << endl;
-      }
+    }
+    if (found == false) {
+      cout << "Invalid Item Name." << endl;
     }
   }
 }
 
+bool find(char* item, vector<Item*>* inventory){
+  vector<Item*>::iterator it;
+  for (it = inventory -> begin(); it != inventory -> end(); ++it) {
+    if(strcmp((*it)->getItemName(), item) == 0){
+      return true;
+    }
+  }
+  return false;
+}

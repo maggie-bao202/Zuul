@@ -45,3 +45,10 @@ void Room :: deleteItem(Item* item){//delete items
       }
     }
 }
+
+Room :: ~Room() {//destructor
+  vector<Item*>::iterator it; //create iterator
+  for(it = itemList->begin(); it != itemList->end(); it++){
+    delete (*it);
+  }
+}
