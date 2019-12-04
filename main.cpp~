@@ -91,7 +91,7 @@ int main(){
   drive->nextTo(car, "Back to House");
   
   parkLot->nextTo(entrance, "Fred Meyer's Entrance");
-  parkLot->nextTo(drive, "Get In Car");
+  parkLot->nextTo(drive, "Get in Car");
   
   entrance->nextTo(mainAisle, "Main Aisle");
   entrance->nextTo(parkLot, "Parking Lot");
@@ -127,14 +127,14 @@ int main(){
       if((find("White Bread",inventory) || find("Whole Wheat Bread", inventory) || find("Sourdough Bread", inventory)) &&
 	 (find("Mozarella Cheese", inventory) || find("Cheddar Cheese", inventory) || find("Parmesean Cheese", inventory)) &&
 	 (find("Sliced Smoked Ham", inventory) || find("Sliced Smoked Beef", inventory)) &&
-	 find("Lettuce", inventory) || find("Spinach", inventory)){
+	 (find("Lettuce", inventory) || find("Spinach", inventory))){
 	cout << "You assemble the carefully selected ingredients you so laboriously sought out to buy. The bread, vegetables, sliced meat, and cheese fall so effortlessly together as if they were meant to be together like this all along. You take a slow bite. Tears of deliciousness fill your twinkling eyes as you take another bite, then another, until the last bite is finally finished. It all went by so quickly. But you have more ingredients leftover on the counter. With lightning speed you make more sandwiches and gobble them down showing no signs of stopping. You feel an earthy rumble from somewhere deep within. It is your colon, telling you that it is ready to be released. You make a beeline for the bathroom, and blow up that toilet that was waiting for the moment to arrive all along." << endl << endl << "THE END" << endl;
 	for (auto it = inventory->begin(); it != inventory->end(); it++){//prevent memory leak
           delete (*it);
         }
         delete inventory;
 	return 0;
-      }
+	}
       else{
 	printRoom(inventory, current);
       }
@@ -168,14 +168,15 @@ int main(){
       printInventory(inventory);//printInventory method
       cout << endl;
     }
-    else if (strcmp(keyword, "GET") == 0){
+    else if (strcmp(keyword, "ADD") == 0){
       cout << endl;
       getItem(inventory, current);//getItem method
-      cout << endl;
+      cout << "Item Added." << endl;
     }
     else if (strcmp(keyword, "DROP") == 0){
       cout << endl;
       dropItem(inventory, current);//dropItem method
+      cout << "Item Dropped." << endl;
     }
     else if (strcmp(keyword, "QUIT") == 0){//QUIT, must delete memory too
       cout << "Game Stopped." << endl;
@@ -186,7 +187,7 @@ int main(){
       return 0;
     }
     else{
-      cout << "Enter a valid keyword (\"GO\", \"INVENTORY\", \"GET\", \"DROP\", or \"QUIT\"). All words are case sensitive." << endl;
+      cout << "Enter a valid keyword (\"GO\", \"INVENTORY\", \"ADD\", \"DROP\", or \"QUIT\"). All words are case sensitive." << endl;
     }
   }
 }
