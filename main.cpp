@@ -41,15 +41,15 @@ int main(){
   //create Rooms
   Room* bedRoom = new Room ("You are in your bedroom, thinking about eating a delicious sandwich.");
   Room* bathRoom = new Room ("You are in the bathroom. You are thinking about blowing up that toilet once you eat that scrumptious sandwich.");
-  Room* livingRoom = new Room ("You are in your living room.");
+  Room* livingRoom = new Room ("You are in your living room. The silence is disrupted by the sound of your grumbling stomach.");
   livingRoom->addItem(phone);//add Items to Rooms
   livingRoom->addItem(keys);
   Room* kitchen = new Room ("You are in your kitchen. The sun is shining through the windows. It's a beautiful day for a sandwich; however, you still need some more ingredients to complete the sandwich. You\
  do not want to eat a disappointment.");
   Room* hallway = new Room ("You are in the hallway. It's kinda spooky, not gonna lie.");
   Room* garage = new Room ("You are in your garage. There is a Lamborghini Veneno there because you are one rich chad. But you are lonely so you don't have a butler to make your own sandwich.");
-  Room* car = new Room ("You are sitting in your Lamborghini Veneno. You use your money to hide behind your frequent thoughts of sadness. Hopefully that sandwich will cheer you up. :)");
-  Room* drive = new Room ("You are driving in your car. The radio plays of late 80s metal rock. You see Fred Meyer's in the distance.");
+  Room* car = new Room ("You are sitting in your Lamborghini. You use your money to hide behind your frequent thoughts of sadness. Hopefully that sandwich will cheer you up. :)");
+  Room* drive = new Room ("You are driving in your Lamborghini. The radio plays of late 80s metal rock. You see Fred Meyer's in the distance.");
   drive->addItem(CDs);
   Room* parkLot = new Room ("You are standing in in the parking lot. You see the towering letters of Fred Meyer's in the distance.");
   Room* entrance = new Room ("You are at the entrance of Fred Meyer's.");
@@ -65,7 +65,7 @@ int main(){
   Room* poultry = new Room ("You are standing in the poultry section of Fred Meyer's. Any kind of sandwich meat is fine.");
   poultry->addItem(ssHam);
   poultry->addItem(ssBeef);
-  Room* produce = new Room ("You are standing in the produce section of Fred Meyer's. You need either lettuce or spinach...or both!");
+  Room* produce = new Room ("You are standing in the produce section of Fred Meyer's. You need either lettuce or spinach.");
   produce->addItem(lettuce);
   produce->addItem(spinach);
 
@@ -91,7 +91,7 @@ int main(){
   drive->nextTo(car, "Back to House");
   
   parkLot->nextTo(entrance, "Fred Meyer's Entrance");
-  parkLot->nextTo(drive, "Get in Car");
+  parkLot->nextTo(drive, "Lamborghini");
   
   entrance->nextTo(mainAisle, "Main Aisle");
   entrance->nextTo(parkLot, "Parking Lot");
@@ -102,8 +102,8 @@ int main(){
   mainAisle->nextTo(produce, "PRODUCE");
   mainAisle->nextTo(entrance, "Entrance of Freddie's");
   
-  mainAisle->nextTo(kitchen, "Kitchen");//testing winning condition
-  kitchen->nextTo(mainAisle, "Fred");
+  //mainAisle->nextTo(kitchen, "Kitchen");//testing winning condition
+  //kitchen->nextTo(mainAisle, "Fred");
 
   grains->nextTo(mainAisle, "Main Aisle");
   grains->nextTo(dairy, "DAIRY");
@@ -125,7 +125,7 @@ int main(){
   while (true){
     if (current == kitchen){//winning condition
       if((find("White Bread",inventory) || find("Whole Wheat Bread", inventory) || find("Sourdough Bread", inventory)) &&
-	 (find("Mozarella Cheese", inventory) || find("Cheddar Cheese", inventory) || find("Parmesean Cheese", inventory)) &&
+	 (find("Mozzarella Cheese", inventory) || find("Cheddar Cheese", inventory) || find("Parmesan Cheese", inventory)) &&
 	 (find("Sliced Smoked Ham", inventory) || find("Sliced Smoked Beef", inventory)) &&
 	 (find("Lettuce", inventory) || find("Spinach", inventory))){
 	cout << "- - - " << endl;
@@ -149,6 +149,7 @@ int main(){
     cin.ignore(999, '\n');
     if (strcmp(keyword, "GO") == 0){//if the keyword is GO
       bool found = false;
+      cout << endl;
       cout << "Go Where? " << endl;
       cin.get(input, 40);
       cin.clear();
@@ -170,15 +171,13 @@ int main(){
       printInventory(inventory);//printInventory method
       cout << endl;
     }
-    else if (strcmp(keyword, "ADD") == 0){
+    else if (strcmp(keyword, "GET") == 0){
       cout << endl;
       getItem(inventory, current);//getItem method
-      cout << "Item Added." << endl;
     }
     else if (strcmp(keyword, "DROP") == 0){
       cout << endl;
       dropItem(inventory, current);//dropItem method
-      cout << "Item Dropped." << endl;
     }
     else if (strcmp(keyword, "QUIT") == 0){//QUIT, must delete memory too
       cout << "Game Stopped." << endl;
@@ -189,7 +188,7 @@ int main(){
       return 0;
     }
     else{
-      cout << "Enter a valid keyword (\"GO\", \"INVENTORY\", \"ADD\", \"DROP\", or \"QUIT\"). All words are case sensitive." << endl;
+      cout << "Enter a valid keyword (\"GO\", \"INVENTORY\", \"GET\", \"DROP\", or \"QUIT\"). All words are case sensitive." << endl;
     }
   }
 }
@@ -247,6 +246,8 @@ void dropItem(vector<Item*>* inventory, Room* current){//drop item into a room f
   
   else{
     printInventory(inventory);
+    cout << endl;
+    cout << endl;
     cout << "Drop What?" << endl;
     cin.getline(dropItem, 40, '\n');
     for(it = inventory->begin(); it != inventory->end(); it++){
@@ -254,6 +255,8 @@ void dropItem(vector<Item*>* inventory, Room* current){//drop item into a room f
 	current->addItem(*it);
 	inventory->erase(it);
 	found = true;
+	cout << endl;
+	cout << "Item Dropped." << endl;
 	return;
       }
     }
@@ -271,7 +274,7 @@ void getItem(vector<Item*>* inventory, Room* current){//pick up item from room
     cout << "No Items in Room." << endl;
   }
   else{
-    cout << "Add What?" << endl;
+    cout << "Get What?" << endl;
     cin.get(getItem, 40);//take input getItem
     cin.clear();
     cin.ignore(999, '\n');
@@ -280,6 +283,7 @@ void getItem(vector<Item*>* inventory, Room* current){//pick up item from room
         inventory->push_back(*it);
         current->deleteItem(*it);
 	found = true;
+	cout << "Item Gotten." << endl;
 	return;
       }
     }
