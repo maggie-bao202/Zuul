@@ -118,7 +118,7 @@ int main(){
 
   produce->nextTo(mainAisle, "Main Aisle");
   produce->nextTo(poultry, "POULTRY");
-
+  vector<Item*>::iterator itrt;                     
   Room* current = bedRoom; //start in bedroom
   char keyword[40];
   char input[40];
@@ -131,8 +131,8 @@ int main(){
 	cout << "- - - " << endl;
 	cout << "You assemble the carefully selected ingredients you so laboriously sought out to buy. The bread, vegetables, sliced meat, and cheese fall so effortlessly together as if they were meant to be together like this all along. You take a slow bite. Tears of deliciousness fill your twinkling eyes as you take another bite, then another, until the last bite is finally finished. It all went by so quickly. But you have more ingredients leftover on the counter. With lightning speed you make more sandwiches and gobble them down showing no signs of stopping. You feel an earthy rumble from somewhere deep within. It is your colon, telling you that it is ready to be released. You make a beeline for the bathroom, and blow up that toilet that was waiting for the moment to arrive all along." << endl << endl << "THE END" << endl;
 	cout << "- - - " << endl;
-	for (auto it = inventory->begin(); it != inventory->end(); it++){//prevent memory leak
-          delete (*it);
+	for (itrt = inventory->begin(); itrt != inventory->end(); itrt++){//prevent memory leak
+          delete (*itrt);
         }
         delete inventory;
 	return 0;
@@ -181,8 +181,8 @@ int main(){
     }
     else if (strcmp(keyword, "QUIT") == 0){//QUIT, must delete memory too
       cout << "Game Stopped." << endl;
-      for (auto it = inventory->begin(); it != inventory->end(); it++){
-	  delete (*it);
+      for (itrt = inventory->begin(); itrt != inventory->end(); itrt++){
+	  delete (*itrt);
       }
       delete inventory;
       return 0;

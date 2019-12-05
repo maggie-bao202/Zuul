@@ -91,7 +91,7 @@ int main(){
   drive->nextTo(car, "Back to House");
   
   parkLot->nextTo(entrance, "Fred Meyer's Entrance");
-  parkLot->nextTo(drive, "Get in Lambo");
+  parkLot->nextTo(drive, "Lamborghini");
   
   entrance->nextTo(mainAisle, "Main Aisle");
   entrance->nextTo(parkLot, "Parking Lot");
